@@ -1,0 +1,6 @@
+Package: libdeflate
+Feature: gzip
+Architecture: x64-windows
+Multi-Arch: same
+Description: Support the gzip format
+Status: install ok installed

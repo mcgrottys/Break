@@ -1,0 +1,6 @@
+Package: libdeflate
+Feature: compression
+Architecture: x64-windows
+Multi-Arch: same
+Description: Support compression
+Status: install ok half-installed

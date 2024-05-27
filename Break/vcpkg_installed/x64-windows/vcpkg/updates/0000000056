@@ -1,0 +1,8 @@
+Package: boost-tti
+Version: 1.84.0
+Depends: boost-config, boost-function-types, boost-mpl, boost-preprocessor, boost-type-traits, boost-vcpkg-helpers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: fee37b8aa16097f639999db9811812fcc1b307b05e07788a995a2161c138f3c9
+Description: Boost tti module
+Status: install ok half-installed

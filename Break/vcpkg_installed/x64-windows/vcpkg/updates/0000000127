@@ -1,0 +1,8 @@
+Package: boost-algorithm
+Version: 1.84.0
+Depends: boost-array, boost-assert, boost-bind, boost-concept-check, boost-config, boost-core, boost-exception, boost-function, boost-iterator, boost-mpl, boost-range, boost-regex, boost-static-assert, boost-throw-exception, boost-tuple, boost-type-traits, boost-unordered, boost-vcpkg-helpers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 6483459bdb3ca3b7c8d4ebbf74caa35b4a1406d586e9b023e7fe3dfd719c6f68
+Description: Boost algorithm module
+Status: install ok installed

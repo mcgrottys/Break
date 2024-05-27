@@ -1,0 +1,8 @@
+Package: boost-mpl
+Version: 1.84.0
+Depends: boost-config, boost-core, boost-predef, boost-preprocessor, boost-static-assert, boost-type-traits, boost-utility, boost-vcpkg-helpers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: e863b1f3cd9f514b6b05bd97836133c21af3dfd4937b55df822c143e473e87fd
+Description: Boost mpl module
+Status: install ok installed

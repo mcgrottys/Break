@@ -1,0 +1,7 @@
+Package: tbb
+Feature: hwloc
+Depends: hwloc
+Architecture: x64-windows
+Multi-Arch: same
+Description: Builds TBB with TBBBind support for Hybrid CPUs or NUMA architectures.
+Status: install ok half-installed

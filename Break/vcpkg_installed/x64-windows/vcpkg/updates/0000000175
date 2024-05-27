@@ -1,0 +1,8 @@
+Package: blosc
+Version: 1.21.5
+Depends: lz4, snappy, vcpkg-cmake, vcpkg-cmake-config, zlib, zstd
+Architecture: x64-windows
+Multi-Arch: same
+Abi: cd76ad48aeb846483758e4a487bebfe2d0f2d028d4e7dd05ee4d69747b943e3e
+Description: A blocking, shuffling and loss-less compression library that can be faster than `memcpy()`
+Status: install ok installed

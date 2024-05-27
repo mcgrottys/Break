@@ -1,0 +1,8 @@
+Package: boost-tuple
+Version: 1.84.0
+Depends: boost-config, boost-core, boost-static-assert, boost-type-traits, boost-vcpkg-helpers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 16cc5402aa0f5a2555d2363a3a54abad2a4d7458862d2468ac7decdecc477db6
+Description: Boost tuple module
+Status: install ok half-installed

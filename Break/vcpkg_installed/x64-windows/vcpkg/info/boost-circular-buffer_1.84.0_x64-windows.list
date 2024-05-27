@@ -1,0 +1,16 @@
+x64-windows/
+x64-windows/include/
+x64-windows/include/boost/
+x64-windows/include/boost/circular_buffer.hpp
+x64-windows/include/boost/circular_buffer/
+x64-windows/include/boost/circular_buffer/base.hpp
+x64-windows/include/boost/circular_buffer/debug.hpp
+x64-windows/include/boost/circular_buffer/details.hpp
+x64-windows/include/boost/circular_buffer/space_optimized.hpp
+x64-windows/include/boost/circular_buffer_fwd.hpp
+x64-windows/share/
+x64-windows/share/boost-circular-buffer/
+x64-windows/share/boost-circular-buffer/copyright
+x64-windows/share/boost-circular-buffer/usage
+x64-windows/share/boost-circular-buffer/vcpkg.spdx.json
+x64-windows/share/boost-circular-buffer/vcpkg_abi_info.txt

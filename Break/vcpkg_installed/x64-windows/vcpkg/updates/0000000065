@@ -1,0 +1,9 @@
+Package: boost-modular-build-helper
+Version: 1.84.0
+Port-Version: 2
+Depends: boost-uninstall, vcpkg-cmake, vcpkg-cmake-get-vars
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 634056ac5c13753ee891dae641981fbbf8f7ca7e950b4e74877afa4fb2e2a0f8
+Description: Internal vcpkg port used to build Boost libraries
+Status: install ok installed

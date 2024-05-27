@@ -1,0 +1,8 @@
+Package: imath
+Version: 3.1.11
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 8051e6222008b7df766c49f8cc0e1743327c485e512977e092486b0272109667
+Description: Imath is a C++ and Python library of 2D and 3D vector, matrix, and math operations for computer graphics.
+Status: install ok half-installed

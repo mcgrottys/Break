@@ -1,0 +1,8 @@
+Package: openvdb
+Version: 11.0.0
+Depends: blosc, boost-any, boost-date-time, boost-interprocess, boost-iostreams, boost-ptr-container, boost-system, boost-thread, boost-uuid, imath, openexr, tbb, vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: a080cd4d7fc2444d91fc017285f0a9726ddb05fcad6c785ea0eee7f696bb60e3
+Description: Sparse volume data structure and tools
+Status: install ok installed

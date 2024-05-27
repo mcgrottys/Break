@@ -1,0 +1,9 @@
+Package: tbb
+Version: 2021.11.0
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 44435d370b4eb3515b70bbe191ae8e2d2069f4726aff6f033ea7e3a408bf53c1
+Description: Intel's Threading Building Blocks.
+Default-Features: hwloc
+Status: install ok half-installed

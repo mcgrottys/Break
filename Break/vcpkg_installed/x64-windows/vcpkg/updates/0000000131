@@ -1,0 +1,8 @@
+Package: boost-ratio
+Version: 1.84.0
+Depends: boost-config, boost-vcpkg-helpers
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 7689e3987cfbe1afe40b7a230a146fb9b486402e35959eb41491a7c816ec1fc3
+Description: Boost ratio module
+Status: install ok installed

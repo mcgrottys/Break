@@ -1,0 +1,13 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: hwloc
+Description: Hardware locality detection and management library
+Version: 2.10.0rc3-git
+Requires.private: 
+Cflags: "-I${includedir}"
+Libs: "-L${libdir}" -lhwloc
+Libs.private: -lgdi32    
+

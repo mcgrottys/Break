@@ -1,0 +1,6 @@
+Package: libdeflate
+Feature: zlib
+Architecture: x64-windows
+Multi-Arch: same
+Description: Support the zlib format
+Status: install ok half-installed

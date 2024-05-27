@@ -1,0 +1,8 @@
+Package: boost-uuid
+Version: 1.84.0
+Depends: boost-assert, boost-config, boost-container-hash, boost-core, boost-io, boost-move, boost-numeric-conversion, boost-predef, boost-random, boost-static-assert, boost-throw-exception, boost-tti, boost-type-traits, boost-vcpkg-helpers, boost-winapi
+Architecture: x64-windows
+Multi-Arch: same
+Abi: f600ccf17099b98f3b6cd98a2ce01245d457fa01287f8a0d510295f4dd66fe1f
+Description: Boost uuid module
+Status: install ok installed

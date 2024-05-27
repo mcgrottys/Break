@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MainWindow.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="MainWindow.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
+    <ClCompile Include="Common\DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="VisualizerMain.cpp" />
+    <ClCompile Include="Content\OpenVDBReader.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\ResidencyManager.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\Sample3DSceneRenderer.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Common\DirectXHelper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualizerMain.h" />
+    <ClInclude Include="Content\OpenVDBReader.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\ResidencyManager.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\Sample3DSceneRenderer.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\SampleSettings.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\ShaderStructures.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{e4c5b745-7532-44aa-a782-888e9f384389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>{9c618f5b-2768-43f6-ac32-c491cf5c1861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{e16b24ec-0b52-4dfc-ac5b-17b7164332ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Clouds">
+      <UniqueIdentifier>{bebef144-eb27-4a19-be23-23f726abafd9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Assets\Clouds\cloud_04_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_05_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_06_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_07_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_08_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_09_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_10_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_01_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_02_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_03_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Content\ResidencyViewer.vs.hlsl">
+      <Filter>Content</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SamplePixelShader.hlsl">
+      <Filter>Content</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SampleVertexShader.hlsl">
+      <Filter>Content</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\ResidencyViewer.ps.hlsl">
+      <Filter>Content</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(MSBuildThisFileDirectory)..\..\natvis\wil.natvis" />
+  </ItemGroup>
+</Project>
