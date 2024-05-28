@@ -88,6 +88,9 @@
     <ClCompile>
       <PreprocessorDefinitions>IMATH_HALF_NO_LOOKUP_TABLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <PostBuildEvent>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">copy /Y "$(ProjectDir)Assets\clouds\cloud_01_variant_0000.vdb" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
@@ -174,7 +177,10 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Clouds\cloud_01_variant_0000.vdb" />
+    <None Include="Assets\Clouds\cloud_01_variant_0000.vdb">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
     <None Include="Assets\Clouds\cloud_02_variant_0000.vdb" />
     <None Include="Assets\Clouds\cloud_03_variant_0000.vdb" />
     <None Include="Assets\Clouds\cloud_04_variant_0000.vdb" />

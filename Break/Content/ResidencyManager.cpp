@@ -2,6 +2,7 @@
 #include "ResidencyManager.h"
 #include "SampleSettings.h"
 #include <Common\DirectXHelper.h>
+#include <openvdb/openvdb.h>
 //#include "..\..\..\DirectXTK\Src\PlatformHelpers.h"
 //#include "..\..\..\DirectXTK\Src\BinaryReader.h"
 
@@ -146,28 +147,40 @@ ID3D11ShaderResourceView* ResidencyManager::ManageTexture(ID3D11Texture3D* textu
     // Clear the tile to zeros.
     byte defaultTileData[SampleSettings::TileSizeInBytes];
     ZeroMemory(defaultTileData, sizeof(defaultTileData));
-    //context->UpdateTiles(tempTexture.Get(), &startCoordinate, &regionSize, defaultTileData, 0);
     regionSize.NumTiles = 1;
-    //regionSize.Height = 2;
-    //regionSize.Width = 2;
-    //regionSize.b = 2;
-    //regionSize.NumTiles = 1;
-    auto test = resource->totalTiles;
-    const std::wstring foldername = L"Assets\\ConvertedTiles\\";
+
+    openvdb::initialize();
+    // Create a VDB file object.
+    openvdb::io::File file("C:\\Clouds\\cloud_01_variant_0000.vdb");
+    // Open the file.  This reads the file header, but not any grids.
+    file.open();
+    // Loop over all grids in the file and retrieve a shared pointer
+    // to the one named "LevelSetSphere".  (This can also be done
+    // more simply by calling file.readGrid("LevelSetSphere").)
+    openvdb::GridBase::Ptr baseGrid;
+    for (openvdb::io::File::NameIterator nameIter = file.beginName();
+        nameIter != file.endName(); ++nameIter)
+    {
+        // Read in only the grid we are interested in.
+        if (nameIter.gridName() == "density") {
+            baseGrid = file.readGrid(nameIter.gridName());
+        }
+        else {
+            std::cout << "skipping grid " << nameIter.gridName() << std::endl;
+        }
+    }
+
     int count = 0;
     int maxLOD = resource->packedMipDesc.NumStandardMips;
-        // Calculate the max LOD
-    //UINT maxLOD = 0;
-    //UINT dimension = totalWidth /32;
-    //while (dimension > 1) {
-    //    dimension /= 2;
-    //    maxLOD++;
-    //}
+
+    auto grid = openvdb::gridPtrCast<openvdb::FloatGrid>(baseGrid);
+    openvdb::FloatGrid::Accessor accessor = grid->getAccessor();
 
     D3D11_TILE_REGION_SIZE size;
     ZeroMemory(&size, sizeof(size));
     size.NumTiles = 1;
     auto tilepoolAddr = m_tilePool.get();
+    float max = 0.0f;
     for (int i = 0; i < maxLOD; i++)
     {
         for (int x = 0; x < std::pow(2, i); x++)
@@ -188,24 +201,28 @@ ID3D11ShaderResourceView* ResidencyManager::ManageTexture(ID3D11Texture3D* textu
                     float colorWeightz = weightPerPixel2 * (256.000f / static_cast<float>(totalWidth/2));
                     float weight = 256.00f / static_cast<float>(tileHeight);
                     float weight2 = 256.00f / static_cast<float>(tileDepth);
-                    std::vector<byte> gradientData(tileWidth * tileHeight * tileDepth * 4); // 4 bytes per pixel (BGRA)
 
+                    std::vector<byte> tileData(tileWidth * tileHeight * tileDepth * 4); // 4 bytes per pixel (BGRA)
                     for (int tz = 0; tz < tileDepth; tz++) {
                         for (int ty = 0; ty < tileHeight; ty++) {
                             for (int tx = 0; tx < tileWidth; tx++) {
-                                float fx = static_cast<float>(tx) / (tileWidth - 1);
-                                float fy = static_cast<float>(ty) / (tileHeight - 1);
-                                float fz = static_cast<float>(tz) / (tileDepth - 1);
-                                byte r = static_cast<byte>((((tx + (x*tileWidth)) * colorWeight)));
-                                byte g = static_cast<byte>((((ty + (y * tileWidth)) * colorWeight)));
-                                byte b = static_cast<byte>((((tz + (z * tileDepth)) * colorWeightz)));
-                                byte a = 0;
+                                // Calculate world coordinates in the VDB grid
+                                int wx = tx + x * tileWidth;
+                                int wy = ty + y * tileHeight;
+                                int wz = tz + z * tileDepth;
 
+                                // Get the value from the VDB file
+                                float vdbValue = accessor.getValue(openvdb::Coord(wx, wy, wz));
+
+                                // Convert the VDB value to a byte (assuming a simple normalization, adjust as needed)
+                                byte v = static_cast<byte>(vdbValue * 255.0f);
+                                max = std::max(max, vdbValue);
+                                // Fill the tile data
                                 int index = ((tz * tileHeight + ty) * tileWidth + tx) * 4;
-                                gradientData[index] = r/2 + g/2;
-                                gradientData[index + 1] = 0;
-                                gradientData[index + 2] = 0;
-                                gradientData[index + 3] = a;
+                                tileData[index] = v;       // Red
+                                tileData[index + 1] = v;   // Green
+                                tileData[index + 2] = v;   // Blue
+                                tileData[index + 3] = 100; // Alpha
                             }
                         }
                     }
@@ -232,7 +249,7 @@ ID3D11ShaderResourceView* ResidencyManager::ManageTexture(ID3D11Texture3D* textu
                         resource->texture,
                         &startCoordinate,
                         &regionSize,
-                        gradientData.data(),
+                        tileData.data(),
                         0
                     );
                     count++;
@@ -244,56 +261,7 @@ ID3D11ShaderResourceView* ResidencyManager::ManageTexture(ID3D11Texture3D* textu
 
 
 
-    //startCoordinate.X = 0;
-    //startCoordinate.Y = 2;
-    //startCoordinate.Subresource = 1;
-    //m_defaultTileIndex2 = 1;
-    //DX::ThrowIfFailed(
-    //    context->UpdateTileMappings(
-    //        resource->texture,
-    //        1,
-    //        &startCoordinate,
-    //        &regionSize,
-    //        m_tilePool.Get(),
-    //        1,
-    //        &rangeFlags,
-    //        &m_defaultTileIndex2,
-    //        nullptr,
-    //        0
-    //    )
-    //);
-    //std::vector<byte> arr(0x10000);
-    //for (int i = 0; i < 0x10000; i++) {
-    //    arr[i] = 70;
-    //    if (i % 512 == 1) {
-    //        arr[i] = 170;
-    //    }
-
-    //    if (i < 512) {
-    //        arr[i] = 140;
-    //    }
-    //}
-    ////startCoordinate.X = 1;
-    ////startCoordinate.Y = 1;
-    //int sizea = sizeof(tempTexture2.Get());
-    //startCoordinate.Y = 0;
-    //regionSize.NumTiles = 1;
-    //context->TiledResourceBarrier(NULL, resource->texture);    
-    //std::vector<byte> arr2(0x10000);
-    //for (int i = 0; i < 0x10000; i++) {
-    //    arr2[i] = 24;
-    //    if (i % 512 == 1) {
-    //        arr2[i] = 69;
-    //    }
-
-    //    if (i < 512) {
-    //        arr2[i] = 200;
-    //    }
-    //}
-    //startCoordinate.Y = 2;
-    //startCoordinate.Y = 1;
     regionSize.NumTiles = 1;
-    //context->TiledResourceBarrier(NULL, resource->texture);
 
 	return nullptr;
 }

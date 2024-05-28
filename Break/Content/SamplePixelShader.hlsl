@@ -10,5 +10,5 @@ SamplerState objSamplerState : register(s0);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float4 pixelColor = objTexture.Sample(objSamplerState, input.inTexCoord); // Sampling with float3
-    return float4(pixelColor.rgb, 1.0f); // Ensure alpha is set to 1.0f
+    return float4(pixelColor.rgba); // Ensure alpha is set to 1.0f
 }

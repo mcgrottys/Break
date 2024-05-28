@@ -123,13 +123,13 @@
     <None Include="Assets\Clouds\cloud_10_variant_0000.vdb">
       <Filter>Assets\Clouds</Filter>
     </None>
-    <None Include="Assets\Clouds\cloud_01_variant_0000.vdb">
-      <Filter>Assets\Clouds</Filter>
-    </None>
     <None Include="Assets\Clouds\cloud_02_variant_0000.vdb">
       <Filter>Assets\Clouds</Filter>
     </None>
     <None Include="Assets\Clouds\cloud_03_variant_0000.vdb">
+      <Filter>Assets\Clouds</Filter>
+    </None>
+    <None Include="Assets\Clouds\cloud_01_variant_0000.vdb">
       <Filter>Assets\Clouds</Filter>
     </None>
   </ItemGroup>

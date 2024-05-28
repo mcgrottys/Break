@@ -54,6 +54,7 @@ namespace Sampling
 
 		com_ptr<ID3D11Texture3D> m_volumeTexture = nullptr;
 		com_ptr<ID3D11ShaderResourceView> m_volumeTextureView = nullptr;
+		com_ptr<ID3D11BlendState> m_blendState = nullptr;
 		ID3D11ShaderResourceView* m_diffuseTextureResidencyView;
 	};
 }

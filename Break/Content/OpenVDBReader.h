@@ -1,3 +1,4 @@
+#include <string>
 namespace OpenVDBReader
 
 {
@@ -7,7 +8,9 @@ namespace OpenVDBReader
         OpenVDBReaderClass();
 		~OpenVDBReaderClass();
 		void ReadVDBFile();
+		void OpenVDBFile(std::wstring filePath);
 		void LoadVDBFile();
     private:
+        std::wstring m_filePath;
     };
 }

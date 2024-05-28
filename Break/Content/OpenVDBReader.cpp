@@ -46,11 +46,11 @@ void OpenVDBReader::OpenVDBReaderClass::ReadVDBFile()
     }
 }
 
-void OpenVDBReader::OpenVDBReaderClass::LoadVDBFile()
+void OpenVDBReader::OpenVDBReaderClass::OpenVDBFile(std::wstring filePath)
 {
     openvdb::initialize();
     // Create a VDB file object.
-    openvdb::io::File file("C:\\Users\\lordc\\source\\repos\\Break\\Break\\Assets\\Clouds\\cloud_01_variant_0000.vdb");
+    openvdb::io::File file("C:\\Clouds\\cloud_01_variant_0000.vdb");
     // Open the file.  This reads the file header, but not any grids.
     file.open();
     // Loop over all grids in the file and retrieve a shared pointer
@@ -68,5 +68,76 @@ void OpenVDBReader::OpenVDBReaderClass::LoadVDBFile()
             std::cout << "skipping grid " << nameIter.gridName() << std::endl;
         }
     }
-    file.close();
+}
+
+void OpenVDBReader::OpenVDBReaderClass::LoadVDBFile()
+{
+    openvdb::initialize();
+    // Create a VDB file object.
+    openvdb::io::File file("C:\\Clouds\\cloud_01_variant_0000.vdb");
+    // Open the file.  This reads the file header, but not any grids.
+    file.open();
+    // Loop over all grids in the file and retrieve a shared pointer
+    // to the one named "LevelSetSphere".  (This can also be done
+    // more simply by calling file.readGrid("LevelSetSphere").)
+    openvdb::GridBase::Ptr baseGrid;
+    for (openvdb::io::File::NameIterator nameIter = file.beginName();
+        nameIter != file.endName(); ++nameIter)
+    {
+        // Read in only the grid we are interested in.
+        if (nameIter.gridName() == "density") {
+            baseGrid = file.readGrid(nameIter.gridName());
+        }
+        else {
+            std::cout << "skipping grid " << nameIter.gridName() << std::endl;
+        }
+    }
+
+    auto grid = openvdb::gridPtrCast<openvdb::FloatGrid>(baseGrid);
+    openvdb::FloatGrid::Accessor accessor = grid->getAccessor();
+
+    int count = 0;
+    int maxLOD = 4;
+    for (int i = 0; i < maxLOD; i++)
+    {
+        for (int x = 0; x < std::pow(2, i); x++)
+        {
+            for (int y = 0; y < std::pow(2, i); y++)
+            {
+                for (int z = 0; z < std::pow(2, i); z++)
+                {
+                    const int tileWidth = 32; // Assume tile width
+                    const int tileHeight = 32; // Assume tile height
+                    const int tileDepth = 16; // Assume tile depth
+                    int numTiles = std::pow(2, i);
+
+                    std::vector<byte> tileData(tileWidth * tileHeight * tileDepth * 4); // 4 bytes per pixel (BGRA)
+
+                    for (int tz = 0; tz < tileDepth; tz++) {
+                        for (int ty = 0; ty < tileHeight; ty++) {
+                            for (int tx = 0; tx < tileWidth; tx++) {
+                                // Calculate world coordinates in the VDB grid
+                                int wx = tx + x * tileWidth;
+                                int wy = ty + y * tileHeight;
+                                int wz = tz + z * tileDepth;
+
+                                // Get the value from the VDB file
+                                float vdbValue = accessor.getValue(openvdb::Coord(wx, wy, wz));
+
+                                // Convert the VDB value to a byte (assuming a simple normalization, adjust as needed)
+                                byte v = static_cast<byte>(vdbValue * 255.0f);
+
+                                // Fill the tile data
+                                int index = ((tz * tileHeight + ty) * tileWidth + tx) * 4;
+                                tileData[index] = v;       // Red
+                                tileData[index + 1] = v;   // Green
+                                tileData[index + 2] = v;   // Blue
+                                tileData[index + 3] = 255; // Alpha
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

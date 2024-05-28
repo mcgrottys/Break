@@ -7,11 +7,13 @@
 #include <winrt/Windows.System.Threading.h>
 #include <Common/DirectXHelper.h>
 #include <Content/OpenVDBReader.h>
+#include <winrt/Windows.Security.Authorization.AppCapabilityAccess.h>
 using namespace OpenVDBReader;
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
 using namespace DX;
 using namespace Visualizer;
+using namespace Windows::Security::Authorization::AppCapabilityAccess;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,6 +22,23 @@ namespace winrt::Break::implementation
 {
     MainWindow::MainWindow()
 	{
+        // Create an AppCapability object for broadFileSystemAccess
+        auto capability = AppCapability::Create(L"broadFileSystemAccess");
+
+        // Check if the capability is granted
+        auto status = capability.CheckAccess();
+
+        if (status == AppCapabilityAccessStatus::DeniedByUser || status == AppCapabilityAccessStatus::DeniedBySystem)
+        {
+            // Inform the user that permission is required
+            printf("Broad file system access is required. Please enable it in Settings -> Privacy -> File system.\n");
+        }
+        else if (status == AppCapabilityAccessStatus::Allowed)
+        {
+            // The capability is granted
+            printf("Broad file system access is available.\n");
+        }
+
         OpenVDBReaderClass vdbtest;
         vdbtest.LoadVDBFile();
 		InitializeComponent();

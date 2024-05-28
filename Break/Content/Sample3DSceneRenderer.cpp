@@ -197,6 +197,9 @@ void Sample3DSceneRenderer::Render()
 		m_diffuseTextureResidencyView
 	};
 	context->PSSetShaderResources(0, ARRAYSIZE(textureViews), textureViews);
+	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	UINT sampleMask = 0xffffffff;
+	context->OMSetBlendState(m_blendState.get(), blendFactor, sampleMask);
 }
 
 void Sample3DSceneRenderer::CreateDeviceDependentResources()
@@ -371,6 +374,23 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 	volumeTextureViewDesc.Texture3D.MostDetailedMip = 0;
 	volumeTextureViewDesc.Texture3D.MipLevels = volumeTextureDesc.MipLevels; // Use the full MIP chain.
 	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateShaderResourceView(m_volumeTexture.get(), &volumeTextureViewDesc, m_volumeTextureView.put()));
+
+	D3D11_BLEND_DESC blendDesc;
+	ZeroMemory(&blendDesc, sizeof(blendDesc));
+	blendDesc.RenderTarget[0].BlendEnable = TRUE;
+	blendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	blendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	blendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	auto context = m_deviceResources->GetD3DDeviceContext();
+	DX::ThrowIfFailed(m_deviceResources->GetD3DDevice()->CreateBlendState(&blendDesc, m_blendState.put()));
+	// Set the blend state
+
+
 	// Once the cube is loaded, the object is ready to be rendered.
 
 	m_loadingComplete = true;
